@@ -1,66 +1,103 @@
-import { useEffect, useState } from 'react';
-import { Text, View, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
-import { getMoviesById } from '../../services/omdbService';
-import { ListChildStyle } from './styles';
+import { useEffect, useState } from 'react'; 
+import {
+    StyleSheet,
+    Text,
+    View,
+    Image,
+    TextInput,
+    Button,
+    TouchableOpacity,
+  } from "react-native";
+  import { StatusBar } from 'expo-status-bar';
 
-const Login = ({ item, pressed, setPressed, index }) => {
-    const [movie, setMovie] = useState(null);
-    const [loading, setLoading] = useState(false);
+const Login = () => {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
-    useEffect(() => { setMovie(null) }, [pressed])
-
-    const onViewPressed = () => {
-        setLoading(true);
-        getMoviesById(item.imdbID).then(response => {
-            setLoading(false);
-            setMovie(response);
-            console.log(response);
-        }).catch((error) => {
-            setLoading(false);
-            console.log(error);
-        })
-        setPressed(index === pressed ? null : index)
+    const onPressed = () => {
+        if(email == "" || password == "" )
+        {
+            console.log("mal");
+        }
+        else if(email == "" && password == ""){
+            console.log("mal");
+        }
+        else{
+            console.log("bieeeen")
+        }
     }
+
     return (
         <>
-        <View style={styles.SectionStyle}>
-            <TextInput
-                style={styles.inputStyle}
-                onChangeText={(UserEmail) =>
-                    setUserEmail(UserEmail)
-                }
-                placeholder="Enter Email" //dummy@abc.com
-                placeholderTextColor="#8b9cb5"
-                autoCapitalize="none"
-                keyboardType="email-address"
-                returnKeyType="next"
-                onSubmitEditing={() =>
-                    passwordInputRef.current &&
-                    passwordInputRef.current.focus()
-                }
-                underlineColorAndroid="#f000"
-                blurOnSubmit={false}
-            />
-            </View>
-            <View style={styles.SectionStyle}>
+            <div>
+                <h1>My Form</h1>
+            <View style={styles.container}>
+            <StatusBar style="auto" />
+            <View style={styles.inputView}>
                 <TextInput
-                style={styles.inputStyle}
-                onChangeText={(UserPassword) =>
-                    setUserPassword(UserPassword)
-                }
-                placeholder="Enter Password" //12345
-                placeholderTextColor="#8b9cb5"
-                keyboardType="default"
-                ref={passwordInputRef}
-                onSubmitEditing={Keyboard.dismiss}
-                blurOnSubmit={false}
+                style={styles.TextInput}
+                placeholder="Email."
+                placeholderTextColor="#003f5c"
+                onChangeText={(email) => setEmail(email)}
+                /> 
+            </View> 
+            <View style={styles.inputView}>
+                <TextInput
+                style={styles.TextInput}
+                placeholder="Password."
+                placeholderTextColor="#003f5c"
                 secureTextEntry={true}
-                underlineColorAndroid="#f000"
-                returnKeyType="next"
-            />
+                onChangeText={(password) => setPassword(password)}
+                /> 
+            </View> 
+            <TouchableOpacity>
+                <Text style={styles.forgot_button}>Forgot Password?</Text> 
+            </TouchableOpacity> 
+            <TouchableOpacity style={styles.loginBtn} onPress={onPressed}>
+                <Text style={styles.loginText} >LOGIN</Text> 
+            </TouchableOpacity> 
             </View>
-            </>
+            </div>
+        </>
     );
-};
+}
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: "#fff",
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    image: {
+      marginBottom: 40,
+    },
+    inputView: {
+      backgroundColor: "#FFC0CB",
+      borderRadius: 30,
+      width: "70%",
+      height: 45,
+      marginBottom: 20,
+      alignItems: "center",
+    },
+    TextInput: {
+      height: 50,
+      flex: 1,
+      padding: 10,
+      marginLeft: 20,
+    },
+    forgot_button: {
+      height: 30,
+      marginBottom: 30,
+    },
+    loginBtn: {
+      width: "80%",
+      borderRadius: 25,
+      height: 50,
+      alignItems: "center",
+      justifyContent: "center",
+      marginTop: 40,
+      backgroundColor: "#FF1493",
+    },
+  });
 
-export default ListChild;
+export default Login;
