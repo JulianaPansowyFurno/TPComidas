@@ -9,21 +9,30 @@ import {
     TouchableOpacity,
   } from "react-native";
   import { StatusBar } from 'expo-status-bar';
+  import { LoginMail } from '../services/ApiService';
 
 const Login = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [mail, setEmail] = useState("");
+    const [pass, setPassword] = useState("");
 
     const onPressed = () => {
-        if(email == "" || password == "" )
+        const user =
+        {
+          email: mail,
+          password: pass
+
+        }
+        if(mail == "" || pass == "" )
         {
             console.log("mal");
         }
-        else if(email == "" && password == ""){
+        else if(mail == "" && pass == ""){
             console.log("mal");
         }
         else{
-            console.log("bieeeen")
+            LoginMail(user)
+            .then(navigate("/home"))
+            .catch(error => alert("mallllll grrrr aahhh yeah yeah sos horribla"));
         }
     }
 
@@ -38,7 +47,7 @@ const Login = () => {
                 style={styles.TextInput}
                 placeholder="Email."
                 placeholderTextColor="#003f5c"
-                onChangeText={(email) => setEmail(email)}
+                onChangeText={(mail) => setEmail(mail)}
                 /> 
             </View> 
             <View style={styles.inputView}>
@@ -47,7 +56,7 @@ const Login = () => {
                 placeholder="Password."
                 placeholderTextColor="#003f5c"
                 secureTextEntry={true}
-                onChangeText={(password) => setPassword(password)}
+                onChangeText={(pass) => setPassword(pass)}
                 /> 
             </View> 
             <TouchableOpacity>
