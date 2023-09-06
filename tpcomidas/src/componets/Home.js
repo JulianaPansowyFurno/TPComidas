@@ -7,20 +7,20 @@ import {
     TouchableOpacity,
   } from "react-native";
   import  StatusBar  from 'expo-status-bar';
-  import  {LoginMail}  from '../services/ApiService';
+  import  LoginMail  from '../services/ApiService';
   import  {useNavigate}  from 'react-router-dom';
 
 const Login = () => {
     const [mail, setEmail] = useState("");
     const [pass, setPassword] = useState("");
     const navigate = useNavigate();
-    const [isLoading, setIsLoading] = useState(false);
 
     const onPressed = () => {
         const user =
         {
           email: mail,
           password: pass
+
         }
         if(mail == "" || pass == "" )
         {
@@ -32,56 +32,16 @@ const Login = () => {
             alert("Incompleto")
         }
         else{
-          setIsLoading(true);
             LoginMail(user)
-            .then(response => {      
-              setIsLoading(false);
-              navigate("/home")
-            })
-            .catch(error => {      
-              setIsLoading(true);
-              alert("mallllll grrrr aahhh yeah yeah sos horribla");
-            });
-            
+            .then(response => navigate("/home"))
+            .catch(error => alert("mallllll grrrr aahhh yeah yeah sos horribla"));
         }
     }
 
     return (
-      
             <View style={styles.container}>
-              {!isLoading ? (
-                <>
-              <View style={styles.inputView}>
-                <TextInput
-                style={styles.TextInput}
-                placeholder="Email."
-                placeholderTextColor="#003f5c"
-                onChangeText={(mail) => setEmail(mail)}
-                /> 
-            </View> 
-            <View style={styles.inputView}>
-                <TextInput
-                style={styles.TextInput}
-                placeholder="Password."
-                placeholderTextColor="#003f5c"
-                secureTextEntry={true}
-                onChangeText={(pass) => setPassword(pass)}
-                /> 
-            </View> 
-            <TouchableOpacity>
-                <Text style={styles.forgot_button}>Forgot Password?</Text> 
-            </TouchableOpacity> 
-            <TouchableOpacity style={styles.loginBtn} onPress={onPressed}>
-                <Text style={styles.loginText} >LOGIN</Text> 
-            </TouchableOpacity>
-            </>
-    ) : (
-            <div className="App">
-              <h1>Cargando...</h1>
-            </div>
-            )}
+             <Text> HOLAAAA</Text>
             </View>
-
     );
 }
 const styles = StyleSheet.create({
