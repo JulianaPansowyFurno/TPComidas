@@ -6,15 +6,17 @@ import {
     TextInput,
     TouchableOpacity,
   } from "react-native";
-  import  StatusBar  from 'expo-status-bar';
   import  {LoginMail}  from '../services/ApiService';
   import  {useNavigate}  from 'react-router-dom';
+  // import { useContextState } from "../../../contextState";
+
 
 const Login = () => {
     const [mail, setEmail] = useState("");
     const [pass, setPassword] = useState("");
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
+    // const { contextState, setContextState } = useContextState();
 
     const onPressed = () => {
         const user =
@@ -36,7 +38,8 @@ const Login = () => {
             LoginMail(user)
             .then(response => {      
               setIsLoading(false);
-              navigate("/home")
+              // setContextState({ newValue: response, type: "SET_USER_TOKEN"});
+              navigate("/plato")
             })
             .catch(error => {      
               setIsLoading(true);
