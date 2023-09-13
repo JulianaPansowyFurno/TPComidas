@@ -8,7 +8,7 @@ import {
   } from "react-native";
   import  {LoginMail}  from '../services/ApiService';
   import  {useNavigate}  from 'react-router-dom';
-  // import { useContextState } from "../../../contextState";
+   import { useContextState } from "../../contextState";
 
 
 const Login = () => {
@@ -16,7 +16,7 @@ const Login = () => {
     const [pass, setPassword] = useState("");
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
-    // const { contextState, setContextState } = useContextState();
+    const { contextState, setContextState } = useContextState();
 
     const onPressed = () => {
         const user =
@@ -38,19 +38,17 @@ const Login = () => {
             LoginMail(user)
             .then(response => {      
               setIsLoading(false);
-              // setContextState({ newValue: response, type: "SET_USER_TOKEN"});
+              setContextState({ newValue: response, type: "SET_USER_TOKEN"});
               navigate("/plato")
             })
             .catch(error => {      
               setIsLoading(true);
-              alert("mallllll grrrr aahhh yeah yeah sos horribla");
+              alert("mallllll");
             });
-            
         }
     }
 
     return (
-      
             <View style={styles.container}>
               {!isLoading ? (
                 <>
