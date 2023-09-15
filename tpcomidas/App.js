@@ -4,6 +4,7 @@ import Login from './src/componets/Login';
 import { BrowserRouter, Routes, Route} from "react-router-dom";
 import PlatoCard from "./src/componets/PlatoCard";
 import BuscadorPlato from "./src/componets/BuscadorPlato";
+import DetallePlato from "./src/componets/DetallePlato";
 import { ContextProvider } from "./contextState";
 
 export default function App() {
@@ -13,7 +14,7 @@ export default function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Login/>}> </Route>
-            <Route path="/detalle" element={<PlatoCard />}> </Route>
+            <Route path="/detalle" element={<DetallePlato />}> </Route>
             <Route path="/buscador" element={<BuscadorPlato />}> </Route>
           </Routes>
         </BrowserRouter>

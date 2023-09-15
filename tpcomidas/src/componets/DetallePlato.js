@@ -1,9 +1,6 @@
 import {
-    FlatList,
-    ActivityIndicator,
     Text,
     View,
-    TextInput,
     StyleSheet,
     Image,
     TouchableOpacity,

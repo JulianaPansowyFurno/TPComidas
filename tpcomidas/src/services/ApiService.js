@@ -32,6 +32,20 @@ export const BuscadorPlatos = async (title) => {
         return false;
     }
 }
+export const DetallePlato = async (id) => {
+    if(title.length > 2){
+    return AxiosClient.get(`https://api.spoonacular.com/recipes/{id}/information`)
+        .then((response) => {
+            return response.data.results;
+        })
+        .catch((error) => {
+            throw error;
+        });
+    }
+    else{
+        return false;
+    }
+
 
 //d7b77e670bee44a4b09219e883eef3f6
 // export const getMoviesById = async (id) => {
