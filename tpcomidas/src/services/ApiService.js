@@ -9,27 +9,27 @@ export const LoginMail = async (user) => {
         });
 }
 
-export const platosBD = async () => {
-    return AxiosClient.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=d7b77e670bee44a4b09219e883eef3f6`)
-        .then((response) => {
-            return response.data.results;
-        }).catch((error) => {
-            throw error;
-        });
-}
+// export const platosBD = async () => {
+//     return AxiosClient.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=d7b77e670bee44a4b09219e883eef3f6`)
+//         .then((response) => {
+//             return response.data.results;
+//         }).catch((error) => {
+//             throw error;
+//         });
+// }
 
 export const BuscadorPlatos = async (title) => {
-    if(title.length >= 2)
-    {
-    return AxiosClient.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=d7b77e670bee44a4b09219e883eef3f6=${title}`)
+    if(title.length > 2){
+    return AxiosClient.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=d7b77e670bee44a4b09219e883eef3f6&query=${title}`)
         .then((response) => {
-            return response.data.Search;
-        }).catch((error) => {
+            return response.data.results;
+        })
+        .catch((error) => {
             throw error;
         });
     }
     else{
-        return "no se puede";
+        return false;
     }
 }
 

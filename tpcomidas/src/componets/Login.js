@@ -39,7 +39,7 @@ const Login = () => {
             .then(response => {      
               setIsLoading(false);
               setContextState({ newValue: response, type: "SET_USER_TOKEN"});
-              navigate("/plato")
+              navigate("/buscador")
             })
             .catch(error => {      
               setIsLoading(true);
