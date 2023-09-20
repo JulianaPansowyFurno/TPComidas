@@ -1,9 +1,6 @@
 import {
-    FlatList,
-    ActivityIndicator,
     Text,
     View,
-    TextInput,
     StyleSheet,
     Image,
     TouchableOpacity,
@@ -11,15 +8,16 @@ import {
 import { ListChildStyle } from './styles';
 import { useContextState, ActionTypes } from "../../contextState";
 import  {useNavigate}  from 'react-router-dom';
+import DetallePlato from "./DetallePlato";
 
 const PlatoCard = ({ item, index }) => {
-    const { contextState, setContextState } = useContextState();
     const navigate = useNavigate();
 
 
-    const onPressed = () => {
-        navigate("/detalle")
+    const onPressed = (id) => {
+      navigate("/detalle", {id});
     }
+
     
     return (
         <TouchableOpacity>
@@ -27,11 +25,11 @@ const PlatoCard = ({ item, index }) => {
                 <Image
                     style={ListChildStyle.tinyLogo}
                     source={{
-                    uri: item.image,
+                    uri: item.image
                     }}
                 />
                 <Text style={ListChildStyle.title}>{item.title}</Text>
-                 <TouchableOpacity style={styles.loginBtn} onPress={onPressed}>
+                 <TouchableOpacity style={styles.loginBtn} onPress={() =>onPressed(item.id)}>
                 <Text style={styles.loginText} > Detalle del plato</Text> 
             </TouchableOpacity> 
 

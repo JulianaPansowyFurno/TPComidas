@@ -11,13 +11,14 @@ import {
   } from "react-native";
 import { ListComponentStyle } from "./styles";
 import { useContextState, ActionTypes } from "../../contextState";
-import PlatoCard from './PlatoCard';
 import  {BuscadorPlatos}  from '../services/ApiService';
+import  {useNavigate}  from 'react-router-dom';
+import PlatoCard from "./PlatoCard";
 
 const ListComponent = ({ search }) => {
     const [busqueda, setBusqueda] = useState("");
     const { contextState, setContextState } = useContextState();
-       
+    const navigate = useNavigate();
 
     const renderItem = ({ item, index }) => (
         <PlatoCard item={item} index={index}/>
@@ -26,6 +27,7 @@ const ListComponent = ({ search }) => {
     const onPressed = () => {
         setContextState({ newValue: true, type: ActionTypes.setLoading});
         BuscadorPlatos(busqueda).then(response => {
+           
             if(response == false){
                 alert("Tienes que escribir mas de dos caracteres");
                 setContextState({ newValue: false, type: ActionTypes.setLoading});
@@ -33,7 +35,9 @@ const ListComponent = ({ search }) => {
             else{
                 setContextState({ newValue: response, type: ActionTypes.setPlatos});
                 setContextState({ newValue: false, type: ActionTypes.setLoading});
+                
             }
+
         })
         .catch((error) => {
             

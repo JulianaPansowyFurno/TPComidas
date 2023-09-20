@@ -1,6 +1,9 @@
 import {
+    FlatList,
+    ActivityIndicator,
     Text,
     View,
+    TextInput,
     StyleSheet,
     Image,
     TouchableOpacity,
@@ -8,15 +11,30 @@ import {
 import { ListChildStyle } from './styles';
 import { useContextState, ActionTypes } from "../../contextState";
 import  {useNavigate}  from 'react-router-dom';
+import { useEffect, useState } from 'react'; 
+import  {Platos}  from '../services/ApiService';
 
-const PlatoCard = ({ item, index }) => {
+
+const DetallePlato = ({ route }) => {
     const { contextState, setContextState } = useContextState();
     const navigate = useNavigate();
+    const [plato, setPlato] = useState([]);
 
 
-    const onPressed = () => {
-        navigate("/detalle")
-    }
+    useEffect(() => {
+      Platos(route.params.id).then(response => {      
+        setIsLoading(false);
+        setPlato(response);
+        
+      })
+      .catch(error => {      
+        setIsLoading(true);
+        alert("mallllll");
+      });
+    }, []);
+
+
+
     
     return (
         <TouchableOpacity>
@@ -24,15 +42,16 @@ const PlatoCard = ({ item, index }) => {
                 <Image
                     style={ListChildStyle.tinyLogo}
                     source={{
-                    uri: item.image,
+                    uri: plato.image
                     }}
                 />
-                <Text style={ListChildStyle.title}>{item.title}</Text>
-                 <TouchableOpacity style={styles.loginBtn} onPress={onPressed}>
+                <Text style={ListChildStyle.title}>{plato.title}</Text>
+                <Text style={ListChildStyle.title}>{plato.pricePerServing}</Text>
+                {/* <TouchableOpacity style={styles.loginBtn} onPress={onPressed}>
                 <Text style={styles.loginText} > Detalle del plato</Text> 
-            </TouchableOpacity> 
+            </TouchableOpacity>  */}
 
-            </View >
+            </View > 
         </TouchableOpacity >
     );
 };
@@ -74,6 +93,6 @@ const styles = StyleSheet.create({
       backgroundColor: "#FF1493",
     },
   });
-export default PlatoCard;
+export default DetallePlato;
 
 

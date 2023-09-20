@@ -5,7 +5,7 @@ export const ListComponentStyle = StyleSheet.create({
         flex: 1,
         backgroundColor: "#0000ff",
         marginTop: StatusBar.currentHeight || 0,
-    },
+    }
 });
 
 
@@ -26,5 +26,5 @@ export const ListChildStyle = StyleSheet.create({
     tinyLogo: {
         width: 100,
         height: 100,
-    },
+    }
 });
