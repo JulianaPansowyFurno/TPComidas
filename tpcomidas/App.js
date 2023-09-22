@@ -5,21 +5,24 @@ import { BrowserRouter, Routes, Route} from "react-router-dom";
 import BuscadorPlato from "./src/componets/BuscadorPlato";
 import DetallePlato from "./src/componets/DetallePlato";
 import { ContextProvider } from "./contextState";
+import * as React from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
     <ContextProvider>
-      <View style={styles.container}>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Login/>}> </Route>
-            <Route path="/buscador" element={<BuscadorPlato />}> </Route>
-            <Route path="/detalle" element={<DetallePlato />}> </Route>
-            
-          </Routes>
-        </BrowserRouter>
-  </View> 
-  </ContextProvider>
+      
+      <NavigationContainer>
+            <Stack.Navigator>
+        <Stack.Screen name="login" component={Login} />
+        <Stack.Screen name="buscador" component={BuscadorPlato} />
+        <Stack.Screen name="detalle" component={DetallePlato} />
+      </Stack.Navigator>
+      </NavigationContainer>
+    </ContextProvider>
   );
 }
 

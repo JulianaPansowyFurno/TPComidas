@@ -7,14 +7,12 @@ import {
     TouchableOpacity,
   } from "react-native";
   import  {LoginMail}  from '../services/ApiService';
-  import  {useNavigate}  from 'react-router-dom';
    import { useContextState } from "../../contextState";
 
 
-const Login = () => {
+const Login = ({navigation}) => {
     const [mail, setEmail] = useState("");
     const [pass, setPassword] = useState("");
-    const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
     const { contextState, setContextState } = useContextState();
 
@@ -39,7 +37,7 @@ const Login = () => {
             .then(response => {      
               setIsLoading(false);
               setContextState({ newValue: response, type: "SET_USER_TOKEN"});
-              navigate("/buscador")
+              navigation.navigate('buscador')
             })
             .catch(error => {      
               setIsLoading(true);

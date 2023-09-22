@@ -7,18 +7,18 @@ import {
   } from "react-native";
 import { ListChildStyle } from './styles';
 import { useContextState, ActionTypes } from "../../contextState";
-import  {useNavigate}  from 'react-router-dom';
-import DetallePlato from "./DetallePlato";
+//import * as React from 'react';
 
-const PlatoCard = ({ item, index }) => {
-    const navigate = useNavigate();
+
+
+const PlatoCard = ({navigation, item, index }) => {
 
 
     const onPressed = (id) => {
-      navigate("/detalle", {id});
+      navigation.navigate('detalle', {id})
     }
+   
 
-    
     return (
         <TouchableOpacity>
             < View style={[ListChildStyle.item]} >
@@ -30,10 +30,11 @@ const PlatoCard = ({ item, index }) => {
                 />
                 <Text style={ListChildStyle.title}>{item.title}</Text>
                  <TouchableOpacity style={styles.loginBtn} onPress={() =>onPressed(item.id)}>
-                <Text style={styles.loginText} > Detalle del plato</Text> 
+                <Text style={styles.loginText} > Detalle del plato </Text> 
             </TouchableOpacity> 
 
             </View >
+            
         </TouchableOpacity >
     );
 };

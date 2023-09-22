@@ -26,7 +26,6 @@ export const BuscadorPlatos = async (title) => {
     }
 }
 export const Platos = async (id) => {
-    if(title.length > 2){
     return AxiosClient.get(`https://api.spoonacular.com/recipes/${id}/information?apiKey=0231713a9c154313856f7787dd1875fd`)
         .then((response) => {
             return response.data;
@@ -34,8 +33,4 @@ export const Platos = async (id) => {
         .catch((error) => {
             throw error;
         });
-    }
-    else{
-        return false;
-    }
 }

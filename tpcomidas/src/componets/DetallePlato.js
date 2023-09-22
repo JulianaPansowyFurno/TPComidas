@@ -13,32 +13,57 @@ import { useContextState, ActionTypes } from "../../contextState";
 import  {useNavigate}  from 'react-router-dom';
 import { useEffect, useState } from 'react'; 
 import  {Platos}  from '../services/ApiService';
+import { Routes, Route, useParams } from 'react-router-dom';
 
 
 const DetallePlato = ({ route }) => {
     const { contextState, setContextState } = useContextState();
-    const navigate = useNavigate();
     const [plato, setPlato] = useState([]);
+    const [filtered, setfiltered] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [veganos, setVeganos] = useState(false);
 
 
     useEffect(() => {
-      Platos(route.params.id).then(response => {      
+      Platos(route.params.id)
+      .then(response => {
         setIsLoading(false);
         setPlato(response);
-        
       })
       .catch(error => {      
         setIsLoading(true);
-        alert("mallllll");
+        alert("mesi");
       });
+      setfiltered(contextState.menu.filter(p => {
+        return p.id === route.params.id;
+      }))
+      setVeganos(contextState.menu.filter(p => {
+        return p.id === plato.vegan;
+      }))
     }, []);
 
-
-
     
+
+    const onPressed = () => {
+    setContextState({ newValue: plato, type: ActionTypes.setMenu});
+    setfiltered([plato])
+    if(contextState.menu.length >= 4 )
+    {
+      alert("No debes tener mas de 4 platos en tu menu")
+    }
+    else if(veganos != 2)
+    {
+      alert("nooooo")
+    }
+  }
+
+
+  console.log(contextState.menu.filter(p => 
+     p.id === route.params.id
+  ));
+
     return (
-        <TouchableOpacity>
-            < View style={[ListChildStyle.item]} >
+            < View >
                 <Image
                     style={ListChildStyle.tinyLogo}
                     source={{
@@ -46,13 +71,19 @@ const DetallePlato = ({ route }) => {
                     }}
                 />
                 <Text style={ListChildStyle.title}>{plato.title}</Text>
-                <Text style={ListChildStyle.title}>{plato.pricePerServing}</Text>
-                {/* <TouchableOpacity style={styles.loginBtn} onPress={onPressed}>
-                <Text style={styles.loginText} > Detalle del plato</Text> 
-            </TouchableOpacity>  */}
+                <Text style={ListChildStyle.title}>Precio de la porcion: {plato.pricePerServing}</Text>
+                <Text style={ListChildStyle.title}>¿Es vegano?:  {plato.vegan ? "Si": "No"}</Text>
+               
 
-            </View > 
-        </TouchableOpacity >
+                
+                {!filtered?.[0] ? (
+                    <TouchableOpacity style={styles.loginBtn} onPress={() =>onPressed(plato)}>
+                      <Text style={styles.loginText} > Agregara al menu</Text> 
+                  </TouchableOpacity> 
+                ) : (
+                   <Text style={styles.loginBtn} > Ya esta agregado al menu </Text> 
+                )}
+            </View >
     );
 };
 const styles = StyleSheet.create({
