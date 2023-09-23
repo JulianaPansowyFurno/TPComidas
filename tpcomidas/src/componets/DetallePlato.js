@@ -21,7 +21,7 @@ const DetallePlato = ({ route }) => {
     const [plato, setPlato] = useState([]);
     const [filtered, setfiltered] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [veganos, setVeganos] = useState(false);
+    const [veganos, setVeganos] = useState([]);
 
 
     useEffect(() => {
@@ -34,33 +34,41 @@ const DetallePlato = ({ route }) => {
         setIsLoading(true);
         alert("mesi");
       });
+      
       setfiltered(contextState.menu.filter(p => {
         return p.id === route.params.id;
       }))
-      setVeganos(contextState.menu.filter(p => {
-        return p.id === plato.vegan;
-      }))
+      
     }, []);
 
+    useEffect(() => {
+      setVeganos(contextState.menu.filter(p => {
+        return p.vegan === plato.vegan;
+      }))
+    }, []);
     
 
     const onPressed = () => {
-    setContextState({ newValue: plato, type: ActionTypes.setMenu});
-    setfiltered([plato])
+      setContextState({ newValue: veganos, type: ActionTypes.setMenu});
+      setVeganos([veganos])
+      setContextState({ newValue: plato, type: ActionTypes.setMenu});
+      setfiltered([plato])
+    console.log(plato.vegan)
+    if(veganos.length > 2)
+    {
+      alert("No debes tener mas de 2 platos veganos en tu menu")
+    }
     if(contextState.menu.length >= 4 )
     {
       alert("No debes tener mas de 4 platos en tu menu")
     }
-    else if(veganos != 2)
-    {
-      alert("nooooo")
-    }
+    
   }
 
 
-  console.log(contextState.menu.filter(p => 
-     p.id === route.params.id
-  ));
+  // console.log(contextState.menu.filter(p => 
+  //    p.id === route.params.id
+  // ));
 
     return (
             < View >
