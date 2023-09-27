@@ -12,6 +12,7 @@ export const ActionTypes = {
   setPlatos: "SET_PLATOS",
   setMenu: "SET_MENU",
   setUserToken: "Set_USER_TOKEN",
+  removeMenu: "REMOVE_MENU"
 };
 
 export const reducer = (state = initialState, action) => {
@@ -27,6 +28,10 @@ export const reducer = (state = initialState, action) => {
     }
     case ActionTypes.setMenu: {
       return { ...state, menu: [...state.menu, action.newValue]};
+    }
+    case ActionTypes.removeMenu: {
+      return { ...state, menu: state.menu.filter(p => {
+        return p.id !== action.newValue})}
     }
     default: {
       return state;

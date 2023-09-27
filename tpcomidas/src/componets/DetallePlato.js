@@ -14,6 +14,7 @@ import  {useNavigate}  from 'react-router-dom';
 import { useEffect, useState } from 'react'; 
 import  {Platos}  from '../services/ApiService';
 import { Routes, Route, useParams } from 'react-router-dom';
+import swal from 'sweetalert';
 
 
 const DetallePlato = ({ route }) => {
@@ -21,10 +22,13 @@ const DetallePlato = ({ route }) => {
     const [plato, setPlato] = useState([]);
     const [filtered, setfiltered] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [veganos, setVeganos] = useState([]);
+    //const [veganos, setVeganos] = useState([]);
+    const [veganCount, setVeganCount] = useState(0);
+    const [notVeganCount, setNotVeganCount] = useState(0);
 
 
     useEffect(() => {
+      
       Platos(route.params.id)
       .then(response => {
         setIsLoading(false);
@@ -39,36 +43,47 @@ const DetallePlato = ({ route }) => {
         return p.id === route.params.id;
       }))
       
+      console.log(contextState.menu)
     }, []);
 
-    useEffect(() => {
-      setVeganos(contextState.menu.filter(p => {
-        return p.vegan === plato.vegan;
-      }))
-    }, []);
+    //  useEffect(() => {
+    //    setVeganos(contextState.menu.filter(p => {
+    //     return p.vegan === plato.vegan;
+    //    }))
+    //  }, []);
     
-
-    const onPressed = () => {
-      setContextState({ newValue: veganos, type: ActionTypes.setMenu});
-      setVeganos([veganos])
-      setContextState({ newValue: plato, type: ActionTypes.setMenu});
-      setfiltered([plato])
-    console.log(plato.vegan)
-    if(veganos.length > 2)
+      //VER TP DE JESIIIIIK LOS NO VEGANOS
+    const onAgregar = () => {
+    console.log(veganos.length)
+    if(contextState.menu.length > 3)
     {
-      alert("No debes tener mas de 2 platos veganos en tu menu")
+      swal("Oops!", "No debes tener mas de 4 platos en tu menu", "error");
     }
-    if(contextState.menu.length >= 4 )
-    {
-      alert("No debes tener mas de 4 platos en tu menu")
+    else{
+      if(plato.vegan && veganCount<2)
+      {
+        setContextState({ newValue: veganos, type: ActionTypes.setMenu});
+        setVeganCount(veganCount+1);
+      }
+      else if(veganos.length >= 3)
+      {
+        swal("Oops!", "No debes tener mas de 2 platos veganos en tu menu", "error");
+      }
+      if(!plato.vegan && contextState.menu.length <= 3)
+      {
+        setContextState({ newValue: plato, type: ActionTypes.setMenu});
+        setfiltered([...filtered, { ...plato}])
+      }
     }
+    
     
   }
 
-
-  // console.log(contextState.menu.filter(p => 
-  //    p.id === route.params.id
-  // ));
+  const onEliminado = () => {
+    setContextState({ newValue: plato.id, type: ActionTypes.setMenu});
+    
+    swal("Good!", "Dish removed from the menu correctly", "success");
+  }
 
     return (
             < View >
@@ -85,11 +100,13 @@ const DetallePlato = ({ route }) => {
 
                 
                 {!filtered?.[0] ? (
-                    <TouchableOpacity style={styles.loginBtn} onPress={() =>onPressed(plato)}>
+                    <TouchableOpacity style={styles.loginBtn} onPress={() =>onAgregar(plato)}>
                       <Text style={styles.loginText} > Agregara al menu</Text> 
                   </TouchableOpacity> 
                 ) : (
-                   <Text style={styles.loginBtn} > Ya esta agregado al menu </Text> 
+                   <TouchableOpacity style={styles.loginBtn} onPress={() =>onEliminado(plato)}>
+                      <Text style={styles.loginText} > Eliminar del menu</Text> 
+                  </TouchableOpacity> 
                 )}
             </View >
     );

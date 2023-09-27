@@ -21,7 +21,8 @@
     "react-native-safe-area-context": "^4.7.2",
     "react-native-screens": "^3.25.0",
     "react-native-web": "^0.19.8",
-    "react-router-dom": "^6.15.0"
+    "react-router-dom": "^6.15.0",
+    "sweetalert": "^2.1.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
