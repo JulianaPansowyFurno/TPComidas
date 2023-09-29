@@ -8,6 +8,7 @@ import { ContextProvider } from "./contextState";
 import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import Menu from "./src/componets/Menu";
 
 const Stack = createNativeStackNavigator();
 
@@ -20,6 +21,7 @@ export default function App() {
         <Stack.Screen name="login" component={Login} />
         <Stack.Screen name="buscador" component={BuscadorPlato} />
         <Stack.Screen name="detalle" component={DetallePlato} />
+        <Stack.Screen name="menu" component={Menu} />
       </Stack.Navigator>
       </NavigationContainer>
     </ContextProvider>

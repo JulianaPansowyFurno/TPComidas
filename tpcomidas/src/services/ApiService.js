@@ -13,7 +13,7 @@ export const LoginMail = async (user) => {
 
 export const BuscadorPlatos = async (title) => {
     if(title.length > 2){
-    return AxiosClient.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=0b4917d14ea6416b879e35a98311292a&query=${title}`)
+    return AxiosClient.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=f61ddc17364547588d946dc37df29d43&query=${title}`)
         .then((response) => {
             return response.data.results;
         })
@@ -26,7 +26,7 @@ export const BuscadorPlatos = async (title) => {
     }
 }
 export const Platos = async (id) => {
-    return AxiosClient.get(`https://api.spoonacular.com/recipes/${id}/information?apiKey=0b4917d14ea6416b879e35a98311292a`)
+    return AxiosClient.get(`https://api.spoonacular.com/recipes/${id}/information?apiKey=f61ddc17364547588d946dc37df29d43`)
         .then((response) => {
             return response.data;
         })

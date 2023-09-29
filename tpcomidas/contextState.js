@@ -5,6 +5,8 @@ export const initialState = {
   platos: [],
   menu: [],
   userToken: "",
+  contVeg: 0,
+  contNotVeg: 0
 };
 
 export const ActionTypes = {
@@ -12,7 +14,9 @@ export const ActionTypes = {
   setPlatos: "SET_PLATOS",
   setMenu: "SET_MENU",
   setUserToken: "Set_USER_TOKEN",
-  removeMenu: "REMOVE_MENU"
+  removeMenu: "REMOVE_MENU",
+  setVeganCount: "VEGAN_COUNT",
+  setNotVeganCount: "NOT_VEGAN_COUNT"
 };
 
 export const reducer = (state = initialState, action) => {
@@ -30,8 +34,15 @@ export const reducer = (state = initialState, action) => {
       return { ...state, menu: [...state.menu, action.newValue]};
     }
     case ActionTypes.removeMenu: {
-      return { ...state, menu: state.menu.filter(p => {
-        return p.id !== action.newValue})}
+      const menu2 = state.menu.filter(p => {
+        return p.id !== action.newValue})
+    return { ...state, menu: menu2}
+    }
+    case ActionTypes.setVeganCount: {
+      return { ...state, contVeg: action.newValue}
+    }
+    case ActionTypes.setNotVeganCount: {
+      return { ...state, contNotVeg: action.newValue}
     }
     default: {
       return state;

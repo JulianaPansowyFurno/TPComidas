@@ -14,7 +14,7 @@ import { useContextState, ActionTypes } from "../../contextState";
 import  {BuscadorPlatos}  from '../services/ApiService';
 import PlatoCard from "./PlatoCard";
 
-const ListComponent = ({ navigation }) => {
+const ListComponent = ({ navigation, promedio }) => {
     const [busqueda, setBusqueda] = useState("");
     const { contextState, setContextState } = useContextState();
 
@@ -40,6 +40,11 @@ const ListComponent = ({ navigation }) => {
 
         });
     }
+    const Menu = () => {
+      navigation.navigate('menu')
+  }
+
+    
 
     return (
         <View>
@@ -72,6 +77,10 @@ const ListComponent = ({ navigation }) => {
             <h1>Cargando...</h1>
             </div>
             )}
+
+            <TouchableOpacity style={styles.loginBtn} onPress={Menu}>
+            <Text style={styles.loginText} >Menu</Text> 
+            </TouchableOpacity>
 </View>
    )
 }

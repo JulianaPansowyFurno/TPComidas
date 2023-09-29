@@ -12,23 +12,20 @@ import { ListChildStyle } from './styles';
 import { useContextState, ActionTypes } from "../../contextState";
 import  {useNavigate}  from 'react-router-dom';
 import { useEffect, useState } from 'react'; 
-import  {Platos}  from '../services/ApiService';
+import  {BuscadorPlatos, Platos}  from '../services/ApiService';
 import { Routes, Route, useParams } from 'react-router-dom';
 import swal from 'sweetalert';
+import  BuscaPlatos  from "../componets/BuscadorPlato";
 
 
-const DetallePlato = ({ route }) => {
+const DetallePlato = ({ route, navigation }) => {
     const { contextState, setContextState } = useContextState();
     const [plato, setPlato] = useState([]);
     const [filtered, setfiltered] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    //const [veganos, setVeganos] = useState([]);
-    const [veganCount, setVeganCount] = useState(0);
-    const [notVeganCount, setNotVeganCount] = useState(0);
 
 
     useEffect(() => {
-      
       Platos(route.params.id)
       .then(response => {
         setIsLoading(false);
@@ -43,47 +40,55 @@ const DetallePlato = ({ route }) => {
         return p.id === route.params.id;
       }))
       
-      console.log(contextState.menu)
     }, []);
 
-    //  useEffect(() => {
-    //    setVeganos(contextState.menu.filter(p => {
-    //     return p.vegan === plato.vegan;
-    //    }))
-    //  }, []);
-    
-      //VER TP DE JESIIIIIK LOS NO VEGANOS
     const onAgregar = () => {
-    console.log(veganos.length)
-    if(contextState.menu.length > 3)
+    if(contextState.menu.length >= 4)
     {
       swal("Oops!", "No debes tener mas de 4 platos en tu menu", "error");
     }
     else{
-      if(plato.vegan && veganCount<2)
-      {
-        setContextState({ newValue: veganos, type: ActionTypes.setMenu});
-        setVeganCount(veganCount+1);
-      }
-      else if(veganos.length >= 3)
-      {
-        swal("Oops!", "No debes tener mas de 2 platos veganos en tu menu", "error");
-      }
-      if(!plato.vegan && contextState.menu.length <= 3)
+      if(plato.vegan && contextState.contVeg < 2)
       {
         setContextState({ newValue: plato, type: ActionTypes.setMenu});
-        setfiltered([...filtered, { ...plato}])
+        setContextState({ newValue: contextState.contVeg += 1, type: ActionTypes.setVeganCount});
+        swal("¡Bien!", "Plato agregado al menú", "success"); 
+      }
+     else if (!plato.vegan && contextState.contNotVeg < 2) {
+        setContextState({ newValue: plato, type: ActionTypes.setMenu });
+        setContextState({ newValue: contextState.contNotVeg += 1, type: ActionTypes.setNotVeganCount});
+        setfiltered([...filtered, { ...plato }]);
+        swal("¡Bien!", "Plato agregado al menú", "success"); 
+      }  else {
+        swal("Oops!", "Solo puedes agregar 2 platos veganos y 2 platos no veganos", "error");              
       }
     }
-    
-    
   }
 
+
+
   const onEliminado = () => {
-    setContextState({ newValue: plato.id, type: ActionTypes.setMenu});
-    
-    swal("Good!", "Dish removed from the menu correctly", "success");
-  }
+    setContextState({ newValue: plato.id, type: ActionTypes.removeMenu});
+    setfiltered([]);
+    if(plato.vegan) {
+      setContextState({ newValue: contextState.contVeg - 1, type: ActionTypes.setVeganCount});
+    } else {
+      setContextState({ newValue: contextState.contNotVeg - 1, type: ActionTypes.setNotVeganCount});
+    }
+    swal("Bien!", "Se elimino el plato del menu correctamente", "success");
+    }
+
+    const calcularPromedio = () => {
+      if (contextState.menu.length === 0) {
+        return 0; 
+      }
+      const sumaHealthscores = contextState.menu.reduce(
+        (acumulador, plato) => acumulador + plato.Healthscore,
+        0
+      );
+      const promedio = sumaHealthscores / contextState.plato.length;
+      return promedio;
+    };
 
     return (
             < View >
@@ -96,8 +101,6 @@ const DetallePlato = ({ route }) => {
                 <Text style={ListChildStyle.title}>{plato.title}</Text>
                 <Text style={ListChildStyle.title}>Precio de la porcion: {plato.pricePerServing}</Text>
                 <Text style={ListChildStyle.title}>¿Es vegano?:  {plato.vegan ? "Si": "No"}</Text>
-               
-
                 
                 {!filtered?.[0] ? (
                     <TouchableOpacity style={styles.loginBtn} onPress={() =>onAgregar(plato)}>
@@ -108,7 +111,10 @@ const DetallePlato = ({ route }) => {
                       <Text style={styles.loginText} > Eliminar del menu</Text> 
                   </TouchableOpacity> 
                 )}
+
             </View >
+
+            
     );
 };
 const styles = StyleSheet.create({
