@@ -14,12 +14,58 @@ import { useContextState, ActionTypes } from "../../contextState";
 import  {BuscadorPlatos}  from '../services/ApiService';
 import PlatoCard from "./PlatoCard";
 
-const Menu = ({ navigation, promedio }) => {
-  
+const ListComponent = ({ navigation }) => {
+    const { contextState, setContextState } = useContextState();
+    const {promedio, setPromedio} = useState(0);
+
+
+    // useEffect(() => {
+    //   calcularPromedio();
+    // }, []);
+
+    const renderItem = ({ item, index }) => (
+        <PlatoCard item={item} index={index} navigation={navigation}/>
+    );
+
+    const Buscador = () => {
+      navigation.navigate('buscador')
+  }
+
+  const calcularPromedio = () => {
+    if (contextState.menu.length === 0) {
+      setPromedio(0) 
+    }
+    setPromedio(contextState.promedioHealthCore / contextState.menu.length)
+  };
 
     return (
         <View>
-        
+        {!contextState.loading ? (
+          <>
+            < SafeAreaView style={ListComponentStyle.container} >
+            {contextState.loading && <ActivityIndicator size="large" color="#00ff00" />}
+            <FlatList
+                    data={contextState.menu}
+                    renderItem={renderItem}
+                    keyExtractor={item => item.id}
+                />
+            </SafeAreaView >
+            
+            </>
+            ) : (
+            <div className="App">
+            <h1>Cargando...</h1>
+            </div>
+            )}
+            <Text>
+              Precio total: {contextState.precioMenu}
+            </Text>
+            <Text>
+              Promedio del healthScore: {promedio}
+            </Text>
+            <TouchableOpacity style={styles.loginBtn} onPress={Buscador}>
+            <Text style={styles.loginText} >Buscador</Text> 
+            </TouchableOpacity>
 </View>
    )
 }
@@ -63,4 +109,4 @@ const styles = StyleSheet.create({
     },
   });
 
-export default Menu;
+export default ListComponent;

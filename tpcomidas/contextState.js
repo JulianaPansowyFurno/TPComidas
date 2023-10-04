@@ -6,7 +6,9 @@ export const initialState = {
   menu: [],
   userToken: "",
   contVeg: 0,
-  contNotVeg: 0
+  contNotVeg: 0,
+  precioMenu: 0,
+  promedioHealthCore: 0
 };
 
 export const ActionTypes = {
@@ -16,13 +18,18 @@ export const ActionTypes = {
   setUserToken: "Set_USER_TOKEN",
   removeMenu: "REMOVE_MENU",
   setVeganCount: "VEGAN_COUNT",
-  setNotVeganCount: "NOT_VEGAN_COUNT"
+  setNotVeganCount: "NOT_VEGAN_COUNT",
+  setPrecioMenu: "PRECIO_MENU",
+  setPromedioHealthCore: "PROMEDIO_HEALTHCORE"
 };
 
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ActionTypes.setLoading: {
       return { ...state, loading: action.newValue };
+    }
+    case ActionTypes.setPrecioMenu: {
+      return { ...state, precioMenu: action.newValue };
     }
     case ActionTypes.setPlatos: {
       return { ...state, platos: action.newValue };
@@ -41,8 +48,11 @@ export const reducer = (state = initialState, action) => {
     case ActionTypes.setVeganCount: {
       return { ...state, contVeg: action.newValue}
     }
-    case ActionTypes.setNotVeganCount: {
-      return { ...state, contNotVeg: action.newValue}
+    case ActionTypes.setVeganCount: {
+      return { ...state, contVeg: action.newValue}
+    }
+    case ActionTypes.setPromedioHealthCore: {
+      return { ...state, promedioHealthCore: action.newValue}
     }
     default: {
       return state;

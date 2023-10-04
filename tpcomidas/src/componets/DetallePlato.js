@@ -52,11 +52,16 @@ const DetallePlato = ({ route, navigation }) => {
       {
         setContextState({ newValue: plato, type: ActionTypes.setMenu});
         setContextState({ newValue: contextState.contVeg += 1, type: ActionTypes.setVeganCount});
+        setContextState({ newValue: contextState.precioMenu += plato.pricePerServing, type: ActionTypes.setPrecioMenu});
+        setContextState({ newValue: contextState.healthScore += plato.healthScore, type: ActionTypes.setPromedioHealthCore});
         swal("¡Bien!", "Plato agregado al menú", "success"); 
       }
      else if (!plato.vegan && contextState.contNotVeg < 2) {
         setContextState({ newValue: plato, type: ActionTypes.setMenu });
         setContextState({ newValue: contextState.contNotVeg += 1, type: ActionTypes.setNotVeganCount});
+        setContextState({ newValue: contextState.precioMenu += plato.pricePerServing, type: ActionTypes.setPrecioMenu});
+        setContextState({ newValue: contextState.healthScore += plato.healthScore, type: ActionTypes.setPromedioHealthCore});
+
         setfiltered([...filtered, { ...plato }]);
         swal("¡Bien!", "Plato agregado al menú", "success"); 
       }  else {
@@ -72,23 +77,19 @@ const DetallePlato = ({ route, navigation }) => {
     setfiltered([]);
     if(plato.vegan) {
       setContextState({ newValue: contextState.contVeg - 1, type: ActionTypes.setVeganCount});
+      setContextState({ newValue: contextState.precioMenu - plato.pricePerServing, type: ActionTypes.setPrecioMenu});
+      setContextState({ newValue: contextState.healthScore - plato.healthScore, type: ActionTypes.setPromedioHealthCore});
+
     } else {
       setContextState({ newValue: contextState.contNotVeg - 1, type: ActionTypes.setNotVeganCount});
+      setContextState({ newValue: contextState.precioMenu - plato.pricePerServing, type: ActionTypes.setPrecioMenu});
+      setContextState({ newValue: contextState.healthScore - plato.healthScore, type: ActionTypes.setPromedioHealthCore});
+
     }
     swal("Bien!", "Se elimino el plato del menu correctamente", "success");
     }
 
-    const calcularPromedio = () => {
-      if (contextState.menu.length === 0) {
-        return 0; 
-      }
-      const sumaHealthscores = contextState.menu.reduce(
-        (acumulador, plato) => acumulador + plato.Healthscore,
-        0
-      );
-      const promedio = sumaHealthscores / contextState.plato.length;
-      return promedio;
-    };
+   
 
     return (
             < View >
