@@ -8,6 +8,8 @@ import {
   } from "react-native";
   import  {LoginMail}  from '../services/ApiService';
    import { useContextState } from "../../contextState";
+   import { ListComponentStyle } from './styles.js';
+
 
 
 const Login = ({navigation}) => {
@@ -37,7 +39,7 @@ const Login = ({navigation}) => {
             .then(response => {      
               setIsLoading(false);
               setContextState({ newValue: response, type: "SET_USER_TOKEN"});
-              navigation.navigate('buscador')
+              navigation.navigate('Buscador')
             })
             .catch(error => {      
               setIsLoading(true);
@@ -47,7 +49,9 @@ const Login = ({navigation}) => {
     }
 
     return (
-            <View style={styles.container}>
+      <div   style={ListComponentStyle.background}>
+
+            <View>
               {!isLoading ? (
                 <>
               <View style={styles.inputView}>
@@ -80,6 +84,7 @@ const Login = ({navigation}) => {
             </div>
             )}
             </View>
+            </div>
 
     );
 }

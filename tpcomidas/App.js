@@ -10,29 +10,20 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Menu from "./src/componets/Menu";
 
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
     <ContextProvider>
-      
-      <NavigationContainer>
-            <Stack.Navigator>
-        <Stack.Screen name="login" component={Login} />
-        <Stack.Screen name="buscador" component={BuscadorPlato} />
-        <Stack.Screen name="detalle" component={DetallePlato} />
-        <Stack.Screen name="menu" component={Menu} />
+      <NavigationContainer >
+        <Stack.Navigator>
+            <Stack.Screen name="Ingreso" component={Login} />
+            <Stack.Screen name="Buscador" component={BuscadorPlato} />
+            <Stack.Screen name="Detalles del plato" component={DetallePlato} />
+            <Stack.Screen name="Tu menu" component={Menu} />
       </Stack.Navigator>
       </NavigationContainer>
     </ContextProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

@@ -1,10 +1,20 @@
 import { StyleSheet, StatusBar } from 'react-native';
 
+
 export const ListComponentStyle = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#0000ff",
         marginTop: StatusBar.currentHeight || 0,
+    },
+    background: {
+        backgroundColor: "#618264",
+        height: "100vh",
+        alignItems: "center",
+        textAlign: "center",gi
+    },
+    card: {
+        marginBottom: 20,
     }
 });
 
@@ -24,7 +34,7 @@ export const ListChildStyle = StyleSheet.create({
         
     },
     tinyLogo: {
-        width: 100,
-        height: 100,
+        width: 150,
+        height: 150,
     }
 });

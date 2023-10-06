@@ -13,8 +13,10 @@ import { ListComponentStyle } from "./styles";
 import { useContextState, ActionTypes } from "../../contextState";
 import  {BuscadorPlatos}  from '../services/ApiService';
 import PlatoCard from "./PlatoCard";
+import swal from 'sweetalert';
 
-const ListComponent = ({ navigation, promedio }) => {
+
+const ListComponent = ({ navigation }) => {
     const [busqueda, setBusqueda] = useState("");
     const { contextState, setContextState } = useContextState();
 
@@ -25,37 +27,45 @@ const ListComponent = ({ navigation, promedio }) => {
     const onPressed = () => {
         setContextState({ newValue: true, type: ActionTypes.setLoading});
         BuscadorPlatos(busqueda).then(response => {
-            if(response == false){
-                alert("Tienes que escribir mas de dos caracteres");
+            if(response == 2){
+                
+                
+              
+              swal("Oops!", "Tienes que escribir mas de dos caracteres", "error");
                 setContextState({ newValue: false, type: ActionTypes.setLoading});
             }
+            else if(response == false)
+                {
+                  swal("Oops!", "No existen platos para ese titulo", "error");
+                  setContextState({ newValue: false, type: ActionTypes.setLoading});
+                }
             else{
                 setContextState({ newValue: response, type: ActionTypes.setPlatos});
                 setContextState({ newValue: false, type: ActionTypes.setLoading});
             }
         })
         .catch((error) => {
-  
-            console.log(error);
-
+        
         });
     }
     const Menu = () => {
-      navigation.navigate('menu')
+      navigation.navigate('Tu menu')
   }
 
     
 
     return (
-        <View>
+      <center>
+        <View style={ListComponentStyle.background}>
         {!contextState.loading ? (
           <>
-            < SafeAreaView style={ListComponentStyle.container} >
+            < SafeAreaView>
             {contextState.loading && <ActivityIndicator size="large" color="#00ff00" />}
             <FlatList
                     data={contextState.platos}
                     renderItem={renderItem}
                     keyExtractor={item => item.id}
+                    
                 />
             </SafeAreaView >
 
@@ -77,13 +87,15 @@ const ListComponent = ({ navigation, promedio }) => {
             <h1>Cargando...</h1>
             </div>
             )}
-
+            
             <TouchableOpacity style={styles.loginBtn} onPress={Menu}>
             <Text style={styles.loginText} >Menu</Text> 
             </TouchableOpacity>
-</View>
+      </View>
+      </center>
    )
 }
+
 
 const styles = StyleSheet.create({
     container: {

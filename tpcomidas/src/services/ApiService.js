@@ -18,11 +18,12 @@ export const BuscadorPlatos = async (title) => {
             return response.data.results;
         })
         .catch((error) => {
-            throw error;
+            return false;
+            
         });
     }
     else{
-        return false;
+        return 2;
     }
 }
 export const Platos = async (id) => {

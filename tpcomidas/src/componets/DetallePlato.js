@@ -16,6 +16,8 @@ import  {BuscadorPlatos, Platos}  from '../services/ApiService';
 import { Routes, Route, useParams } from 'react-router-dom';
 import swal from 'sweetalert';
 import  BuscaPlatos  from "../componets/BuscadorPlato";
+import { ListComponentStyle } from './styles.js';
+
 
 
 const DetallePlato = ({ route, navigation }) => {
@@ -53,14 +55,14 @@ const DetallePlato = ({ route, navigation }) => {
         setContextState({ newValue: plato, type: ActionTypes.setMenu});
         setContextState({ newValue: contextState.contVeg += 1, type: ActionTypes.setVeganCount});
         setContextState({ newValue: contextState.precioMenu += plato.pricePerServing, type: ActionTypes.setPrecioMenu});
-        setContextState({ newValue: contextState.healthScore += plato.healthScore, type: ActionTypes.setPromedioHealthCore});
+        setContextState({ newValue: contextState.promedioHealthCore += plato.healthScore, type: ActionTypes.setPromedioHealthCore});
         swal("¡Bien!", "Plato agregado al menú", "success"); 
       }
      else if (!plato.vegan && contextState.contNotVeg < 2) {
         setContextState({ newValue: plato, type: ActionTypes.setMenu });
         setContextState({ newValue: contextState.contNotVeg += 1, type: ActionTypes.setNotVeganCount});
         setContextState({ newValue: contextState.precioMenu += plato.pricePerServing, type: ActionTypes.setPrecioMenu});
-        setContextState({ newValue: contextState.healthScore += plato.healthScore, type: ActionTypes.setPromedioHealthCore});
+        setContextState({ newValue: contextState.promedioHealthCore += plato.healthScore, type: ActionTypes.setPromedioHealthCore});
 
         setfiltered([...filtered, { ...plato }]);
         swal("¡Bien!", "Plato agregado al menú", "success"); 
@@ -78,12 +80,12 @@ const DetallePlato = ({ route, navigation }) => {
     if(plato.vegan) {
       setContextState({ newValue: contextState.contVeg - 1, type: ActionTypes.setVeganCount});
       setContextState({ newValue: contextState.precioMenu - plato.pricePerServing, type: ActionTypes.setPrecioMenu});
-      setContextState({ newValue: contextState.healthScore - plato.healthScore, type: ActionTypes.setPromedioHealthCore});
+      setContextState({ newValue: contextState.promedioHealthCore - plato.healthScore, type: ActionTypes.setPromedioHealthCore});
 
     } else {
       setContextState({ newValue: contextState.contNotVeg - 1, type: ActionTypes.setNotVeganCount});
       setContextState({ newValue: contextState.precioMenu - plato.pricePerServing, type: ActionTypes.setPrecioMenu});
-      setContextState({ newValue: contextState.healthScore - plato.healthScore, type: ActionTypes.setPromedioHealthCore});
+      setContextState({ newValue: contextState.promedioHealthCore - plato.healthScore, type: ActionTypes.setPromedioHealthCore});
 
     }
     swal("Bien!", "Se elimino el plato del menu correctamente", "success");
@@ -92,7 +94,8 @@ const DetallePlato = ({ route, navigation }) => {
    
 
     return (
-            < View >
+      <div   style={ListComponentStyle.background}>
+            < View>
                 <Image
                     style={ListChildStyle.tinyLogo}
                     source={{
@@ -102,7 +105,6 @@ const DetallePlato = ({ route, navigation }) => {
                 <Text style={ListChildStyle.title}>{plato.title}</Text>
                 <Text style={ListChildStyle.title}>Precio de la porcion: {plato.pricePerServing}</Text>
                 <Text style={ListChildStyle.title}>¿Es vegano?:  {plato.vegan ? "Si": "No"}</Text>
-                
                 {!filtered?.[0] ? (
                     <TouchableOpacity style={styles.loginBtn} onPress={() =>onAgregar(plato)}>
                       <Text style={styles.loginText} > Agregara al menu</Text> 
@@ -114,8 +116,7 @@ const DetallePlato = ({ route, navigation }) => {
                 )}
 
             </View >
-
-            
+            </div>
     );
 };
 const styles = StyleSheet.create({

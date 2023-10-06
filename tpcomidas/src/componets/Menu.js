@@ -14,31 +14,39 @@ import { useContextState, ActionTypes } from "../../contextState";
 import  {BuscadorPlatos}  from '../services/ApiService';
 import PlatoCard from "./PlatoCard";
 
+
 const ListComponent = ({ navigation }) => {
     const { contextState, setContextState } = useContextState();
-    const {promedio, setPromedio} = useState(0);
+    const [promedio, setPromedio] = useState(0);
 
 
-    // useEffect(() => {
-    //   calcularPromedio();
-    // }, []);
+    useEffect(() => {
+      calcularPromedio();
+    }, []);
 
     const renderItem = ({ item, index }) => (
         <PlatoCard item={item} index={index} navigation={navigation}/>
     );
 
     const Buscador = () => {
-      navigation.navigate('buscador')
+      navigation.navigate('Buscador')
   }
 
   const calcularPromedio = () => {
     if (contextState.menu.length === 0) {
       setPromedio(0) 
     }
-    setPromedio(contextState.promedioHealthCore / contextState.menu.length)
+    else{
+      setPromedio(contextState.promedioHealthCore / contextState.menu.length)
+    }
+    
+    console.log("prom" + contextState.promedioHealthCore)
+    console.log("lenght" + contextState.menu.length)
   };
 
     return (
+      <div   style={ListComponentStyle.background}>
+
         <View>
         {!contextState.loading ? (
           <>
@@ -67,6 +75,7 @@ const ListComponent = ({ navigation }) => {
             <Text style={styles.loginText} >Buscador</Text> 
             </TouchableOpacity>
 </View>
+</div>
    )
 }
 
