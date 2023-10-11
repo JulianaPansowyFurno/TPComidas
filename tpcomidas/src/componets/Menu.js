@@ -13,7 +13,8 @@ import { ListComponentStyle } from "./styles";
 import { useContextState, ActionTypes } from "../../contextState";
 import  {BuscadorPlatos}  from '../services/ApiService';
 import PlatoCard from "./PlatoCard";
-
+import { DetallePlatoStyle } from './styles.js';
+import { BuscadorStyle } from './styles.js';
 
 const ListComponent = ({ navigation }) => {
     const { contextState, setContextState } = useContextState();
@@ -50,7 +51,7 @@ const ListComponent = ({ navigation }) => {
         <View>
         {!contextState.loading ? (
           <>
-            < SafeAreaView style={ListComponentStyle.container} >
+            < SafeAreaView style={ListComponentStyle.card} >
             {contextState.loading && <ActivityIndicator size="large" color="#00ff00" />}
             <FlatList
                     data={contextState.menu}
@@ -65,14 +66,14 @@ const ListComponent = ({ navigation }) => {
             <h1>Cargando...</h1>
             </div>
             )}
-            <Text>
+            <Text style={DetallePlatoStyle.title}>
               Precio total: {contextState.precioMenu}
             </Text>
-            <Text>
+            <Text  style={DetallePlatoStyle.title}>
               Promedio del healthScore: {promedio}
             </Text>
-            <TouchableOpacity style={styles.loginBtn} onPress={Buscador}>
-            <Text style={styles.loginText} >Buscador</Text> 
+            <TouchableOpacity style={DetallePlatoStyle.loginBtn} onPress={Buscador}>
+            <Text style={DetallePlatoStyle.loginText} >Buscador</Text> 
             </TouchableOpacity>
 </View>
 </div>

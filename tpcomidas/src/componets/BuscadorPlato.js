@@ -14,6 +14,7 @@ import { useContextState, ActionTypes } from "../../contextState";
 import  {BuscadorPlatos}  from '../services/ApiService';
 import PlatoCard from "./PlatoCard";
 import swal from 'sweetalert';
+import { BuscadorStyle } from './styles.js';
 
 
 const ListComponent = ({ navigation }) => {
@@ -59,7 +60,7 @@ const ListComponent = ({ navigation }) => {
         <View style={ListComponentStyle.background}>
         {!contextState.loading ? (
           <>
-            < SafeAreaView>
+            < SafeAreaView style={BuscadorStyle.scroll}>
             {contextState.loading && <ActivityIndicator size="large" color="#00ff00" />}
             <FlatList
                     data={contextState.platos}
@@ -69,17 +70,17 @@ const ListComponent = ({ navigation }) => {
                 />
             </SafeAreaView >
 
-            <View style={styles.inputView}>
+            <View style={BuscadorStyle.inputView}>
             <TextInput
-            style={styles.TextInput}
+            style={BuscadorStyle.TextInput}
             placeholder="Busqueda"
             placeholderTextColor="#003f5c"
             onChangeText={(busqueda) => setBusqueda(busqueda)}
             /> 
             </View> 
             
-            <TouchableOpacity style={styles.loginBtn} onPress={onPressed}>
-            <Text style={styles.loginText} >Buscar</Text> 
+            <TouchableOpacity style={BuscadorStyle.loginBtn} onPress={onPressed}>
+            <Text style={BuscadorStyle.loginText} >Buscar</Text> 
             </TouchableOpacity>
             </>
             ) : (
@@ -88,8 +89,8 @@ const ListComponent = ({ navigation }) => {
             </div>
             )}
             
-            <TouchableOpacity style={styles.loginBtn} onPress={Menu}>
-            <Text style={styles.loginText} >Menu</Text> 
+            <TouchableOpacity style={BuscadorStyle.MenuBTN} onPress={Menu}>
+            <Text style={BuscadorStyle.loginText} >Menu</Text> 
             </TouchableOpacity>
       </View>
       </center>

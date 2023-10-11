@@ -17,6 +17,7 @@ import { Routes, Route, useParams } from 'react-router-dom';
 import swal from 'sweetalert';
 import  BuscaPlatos  from "../componets/BuscadorPlato";
 import { ListComponentStyle } from './styles.js';
+import { DetallePlatoStyle } from './styles.js';
 
 
 
@@ -97,21 +98,21 @@ const DetallePlato = ({ route, navigation }) => {
       <div   style={ListComponentStyle.background}>
             < View>
                 <Image
-                    style={ListChildStyle.tinyLogo}
+                    style={DetallePlatoStyle.tinyLogo}
                     source={{
                     uri: plato.image
                     }}
                 />
-                <Text style={ListChildStyle.title}>{plato.title}</Text>
-                <Text style={ListChildStyle.title}>Precio de la porcion: {plato.pricePerServing}</Text>
-                <Text style={ListChildStyle.title}>¿Es vegano?:  {plato.vegan ? "Si": "No"}</Text>
+                <Text style={DetallePlatoStyle.title}>{plato.title}</Text>
+                <Text style={DetallePlatoStyle.title}>Precio de la porcion: {plato.pricePerServing}</Text>
+                <Text style={DetallePlatoStyle.title}>¿Es vegano?:  {plato.vegan ? "Si": "No"}</Text>
                 {!filtered?.[0] ? (
-                    <TouchableOpacity style={styles.loginBtn} onPress={() =>onAgregar(plato)}>
-                      <Text style={styles.loginText} > Agregara al menu</Text> 
+                    <TouchableOpacity style={DetallePlatoStyle.loginBtn} onPress={() =>onAgregar(plato)}>
+                      <Text style={DetallePlatoStyle.loginText} > Agregara al menu</Text> 
                   </TouchableOpacity> 
                 ) : (
-                   <TouchableOpacity style={styles.loginBtn} onPress={() =>onEliminado(plato)}>
-                      <Text style={styles.loginText} > Eliminar del menu</Text> 
+                   <TouchableOpacity style={DetallePlatoStyle.loginBtn} onPress={() =>onEliminado(plato)}>
+                      <Text style={DetallePlatoStyle.loginText} > Eliminar del menu</Text> 
                   </TouchableOpacity> 
                 )}
 

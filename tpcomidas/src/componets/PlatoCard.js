@@ -8,6 +8,7 @@ import {
 import { ListChildStyle } from './styles';
 import { useContextState, ActionTypes } from "../../contextState";
 import { ListComponentStyle } from './styles.js';
+import { PlatoStyle } from './styles.js';
 
 const PlatoCard = ({navigation, item, index }) => {
 
@@ -21,39 +22,19 @@ const PlatoCard = ({navigation, item, index }) => {
       <div style={ListComponentStyle.card}>
             < View >
                 <Image
-                    style={ListChildStyle.tinyLogo}
+                    style={PlatoStyle.tinyLogo}
                     source={{
                     uri: item.image
                     }} 
                 />
-                <Text style={ListChildStyle.title}>{item.title}</Text>
-              <TouchableOpacity style={styles.loginBtn} onPress={() =>onPressed(item.id)}>
-                <Text style={styles.loginText} > Detalle del plato </Text> 
+                <Text style={PlatoStyle.title}>{item.title}</Text>
+              <TouchableOpacity style={PlatoStyle.loginBtn} onPress={() =>onPressed(item.id)}>
+                <Text  > Detalle del plato </Text> 
             </TouchableOpacity>
             </View>
         </div>
     );
 };
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      alignItems: "center",
-      justifyContent: "center",
-      
-    },
-    image: {
-      marginBottom: 40,
-    },
-    loginBtn: {
-      width: "20%",
-      borderRadius: 15,
-      height: 50,
-      alignItems: "center",
-      justifyContent: "center",
-      marginTop: 40,
-      backgroundColor: "#D0E7D2",
-    },
-  });
 export default PlatoCard;
 
 

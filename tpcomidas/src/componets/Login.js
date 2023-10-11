@@ -9,6 +9,7 @@ import {
   import  {LoginMail}  from '../services/ApiService';
    import { useContextState } from "../../contextState";
    import { ListComponentStyle } from './styles.js';
+   import { LoginStyles } from './styles.js';
 
 
 
@@ -54,17 +55,17 @@ const Login = ({navigation}) => {
             <View>
               {!isLoading ? (
                 <>
-              <View style={styles.inputView}>
+              <View style={LoginStyles.inputView}>
                 <TextInput
-                style={styles.TextInput}
+                style={LoginStyles.TextInput}
                 placeholder="Email."
                 placeholderTextColor="#003f5c"
                 onChangeText={(mail) => setEmail(mail)}
                 /> 
             </View> 
-            <View style={styles.inputView}>
+            <View style={LoginStyles.inputView}>
                 <TextInput
-                style={styles.TextInput}
+                style={LoginStyles.TextInput}
                 placeholder="Password."
                 placeholderTextColor="#003f5c"
                 secureTextEntry={true}
@@ -72,10 +73,9 @@ const Login = ({navigation}) => {
                 /> 
             </View> 
             <TouchableOpacity>
-                <Text style={styles.forgot_button}>Forgot Password?</Text> 
             </TouchableOpacity> 
-            <TouchableOpacity style={styles.loginBtn} onPress={onPressed}>
-                <Text style={styles.loginText} >LOGIN</Text> 
+            <TouchableOpacity style={LoginStyles.loginBtn} onPress={onPressed}>
+                <Text style={LoginStyles.loginText} >LOGIN</Text> 
             </TouchableOpacity>
             </>
     ) : (
@@ -88,43 +88,5 @@ const Login = ({navigation}) => {
 
     );
 }
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: "#fff",
-      alignItems: "center",
-      justifyContent: "center",
-    },
-    image: {
-      marginBottom: 40,
-    },
-    inputView: {
-      backgroundColor: "#FFC0CB",
-      borderRadius: 30,
-      width: "70%",
-      height: 45,
-      marginBottom: 20,
-      alignItems: "center",
-    },
-    TextInput: {
-      height: 50,
-      flex: 1,
-      padding: 10,
-      marginLeft: 20,
-    },
-    forgot_button: {
-      height: 30,
-      marginBottom: 30,
-    },
-    loginBtn: {
-      width: "80%",
-      borderRadius: 25,
-      height: 50,
-      alignItems: "center",
-      justifyContent: "center",
-      marginTop: 40,
-      backgroundColor: "#FF1493",
-    },
-  });
 
 export default Login;
